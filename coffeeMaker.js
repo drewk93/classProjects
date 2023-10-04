@@ -1,25 +1,51 @@
 let coffeeMaker = {
     coffeeHot: true,
-    coffeeVolume: 8,
+    coffeeCups: 10,
     coffeeFull: true,
-    isCoffeeFull: function (volume){
-        if (coffeeMaker.coffeeVolume === 10){
-            coffeeMaker.coffeeFull = true;
-            
+    coffeeHopper: 3,
+    coffeeStock: 4,
+    isCoffeeFull: (volume) => {
+        if (coffeeMaker.coffeeCups === 10){
+            coffeeMaker.coffeeFull = true; 
         } else {
         coffeeMaker.coffeeFull = false;        
         }
     },
-    brewCoffee: function (){
-        coffeeMaker.coffeeVolume = 10;
-        return `Coffee Brewed to ${coffeeMaker.coffeeVolume} cups!`;
+    brewCoffee: () => {
+        if (coffeeMaker.coffeeHopper >= 1){
+            coffeeMaker.coffeeHopper--
+            coffeeMaker.coffeeCups = 10;
+            coffeeMaker.coffeeHot = true;
+            return `Coffee Brewed to ${coffeeMaker.coffeeCups} cups!`;
+        }
+        if (coffeeMaker.coffeeHopper === 0){
+            return `Coffee Hopper is empty. Fill Hopper first.`
+        }
     },
-    drinkCoffee: function(){
-        coffeeMaker.coffeeVolume -= 1
+    fillHopper: () => {
+        if(coffeeMaker.coffeeHopper >= 0 && coffeeMaker.coffeeHopper < 4){
+            while (coffeeMaker.coffeeHopper < 4 && coffeeMaker.coffeeStock > 0){
+                let coffeeUsedFromStock = 0
+                coffeeMaker.coffeeHopper++
+                coffeeMaker.coffeeStock--
+                coffeeUsedFromStock++
+                return `Coffee Hopper is now full. Used ${coffeeUsedFromStock} pounds of coffee to fill Hopper. ${coffeeMaker.coffeeStock} pounds of coffee left in Coffee Stock`
+            }
+        if (coffeeMaker.coffeeHopper === 4){
+            return `Coffee Hopper is already full`
+        }
+        }
+    },
+    drinkCoffee: (cups) => {
+        coffeeMaker.coffeeCups -= cups
         coffeeMaker.isCoffeeFull()
-        console.log(`You drank 1 cup of coffee. Coffee volume is now ${coffeeMaker.coffeeVolume} cups.`)
+        return(`You drank ${cups} cup(s) of coffee. Coffee Cups is now ${coffeeMaker.coffeeCups} cups.`)
+    },
+    coffeeIsCold: (hours) => {
+        if (hours >= 3){
+            coffeeMaker.coffeeHot = false;
+        }
     }
 }
-console.log(coffeeMaker.coffeeFull)
-console.log(coffeeMaker.drinkCoffee())
-console.log(coffeeMaker.coffeeFull)
+
+console.log(coffeeMaker.fillHopper())
