@@ -16,7 +16,7 @@ let coffeeMaker = {
             coffeeMaker.coffeeHopper--
             coffeeMaker.coffeeCups = 10;
             coffeeMaker.coffeeHot = true;
-            return `Coffee Brewed to ${coffeeMaker.coffeeCups} cups!`;
+            return `Full pot of coffee. You have ${coffeeMaker.coffeeCups} cups!`;
         }
         if (coffeeMaker.coffeeHopper === 0){
             return `Coffee Hopper is empty. Fill Hopper first.`
